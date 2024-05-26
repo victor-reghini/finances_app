@@ -1,11 +1,13 @@
 package br.com.victor.finances_app.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
+@Builder
 @Getter
 @Setter
 @Entity

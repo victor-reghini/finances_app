@@ -1,11 +1,13 @@
 package br.com.victor.finances_app.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
+@Builder
 @Getter
 @Setter
 @Entity
@@ -24,22 +26,22 @@ public class Expense {
     private Date purchaseDate;
     private Integer installment;
     private Integer totalInstallments;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="payment_types", referencedColumnName="ID")
     private String paymentTypeId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="accounts", referencedColumnName="ID")
     private String accountId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="cards", referencedColumnName="ID")
     private String cardId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="users", referencedColumnName="ID")
     private String userId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="expense_group", referencedColumnName="ID")
     private String expenseGroupId;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="categories", referencedColumnName="ID")
     private String categoryId;
 }

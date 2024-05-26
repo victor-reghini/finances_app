@@ -1,9 +1,11 @@
 package br.com.victor.finances_app.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @Entity
@@ -14,7 +16,7 @@ public class ExpenseGroup {
     private Long id;
     private String name;
     private String description;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="users", referencedColumnName="ID")
     private Long userId;
 }
