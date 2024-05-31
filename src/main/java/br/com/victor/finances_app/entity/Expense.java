@@ -1,47 +1,64 @@
 package br.com.victor.finances_app.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Builder
 @Getter
-@Setter
 @Entity
 @Table(name = "expenses")
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
+
     private String description;
+
     private String status;
+
     private Float value;
+
+    @Column(name="paid_value")
     private Float paidValue;
+
+    @Column(name="payment_date")
     private Date paymentDate;
+
+    @Column(name="payment_due_date")
     private Date paymentDueDate;
+
+    @Column(name="purchase_date")
     private Date purchaseDate;
+
     private Integer installment;
+
+    @Column(name="total_installments")
     private Integer totalInstallments;
+
     @ManyToOne
-    @JoinColumn(name="payment_types", referencedColumnName="ID")
-    private String paymentTypeId;
+    @JoinColumn(name="payment_type_id")
+    private PaymentType paymentType;
+
     @ManyToOne
-    @JoinColumn(name="accounts", referencedColumnName="ID")
-    private String accountId;
+    @JoinColumn(name="account_id")
+    private Account account;
+
     @ManyToOne
-    @JoinColumn(name="cards", referencedColumnName="ID")
-    private String cardId;
+    @JoinColumn(name="card_id")
+    private Card card;
+
     @ManyToOne
-    @JoinColumn(name="users", referencedColumnName="ID")
-    private String userId;
+    @JoinColumn(name="user_id")
+    private User user;
+
     @ManyToOne
-    @JoinColumn(name="expense_group", referencedColumnName="ID")
-    private String expenseGroupId;
+    @JoinColumn(name="expense_group_id")
+    private ExpenseGroup expenseGroup;
+
     @ManyToOne
-    @JoinColumn(name="categories", referencedColumnName="ID")
-    private String categoryId;
+    @JoinColumn(name="category_id")
+    private Category category;
 }

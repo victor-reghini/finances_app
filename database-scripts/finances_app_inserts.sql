@@ -1,7 +1,7 @@
 
 INSERT INTO users
 (id, "name", email, "password")
-VALUES(0, '', '', '');
+VALUES(0, 'test user', 'test@user.com', 'test123');
 
 
 INSERT INTO expense_group
