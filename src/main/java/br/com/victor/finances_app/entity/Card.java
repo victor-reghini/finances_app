@@ -26,7 +26,7 @@ public class Card {
     private User user;
 
     @Column(name="closing_date")
-    private Date closingDate;
+    private Integer closingDate;
 
     @Column(name="card_type")
     private String cardType;
