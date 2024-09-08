@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.ExpenseGroupDTO;
 import br.com.victor.finances_app.entity.ExpenseGroup;
 import br.com.victor.finances_app.service.ExpenseGroupService;
 import jakarta.validation.Valid;
@@ -20,23 +21,23 @@ public class ExpenseGroupController {
     }
 
     @PostMapping
-    ExpenseGroup create(@RequestBody @Valid ExpenseGroup expenseGroup){
-        return expenseGroupService.create(expenseGroup);
+    ExpenseGroupDTO create(@RequestBody @Valid ExpenseGroup expenseGroup){
+        return new ExpenseGroupDTO().fromExpenseGroup(expenseGroupService.create(expenseGroup));
     }
 
     @PutMapping
-    ExpenseGroup update(@RequestBody @Valid ExpenseGroup expenseGroup){
-        return expenseGroupService.update(expenseGroup);
+    ExpenseGroupDTO update(@RequestBody @Valid ExpenseGroup expenseGroup){
+        return new ExpenseGroupDTO().fromExpenseGroup(expenseGroupService.update(expenseGroup));
     }
 
     @GetMapping(path = "/list")
-    List<ExpenseGroup> getAll(){
-        return expenseGroupService.getAll();
+    List<ExpenseGroupDTO> getAll(@RequestParam Long userId){
+        return expenseGroupService.getAll(userId).stream().map(expenseGroup -> new ExpenseGroupDTO().fromExpenseGroup(expenseGroup)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<ExpenseGroup> getUser(@PathVariable Long id){
-        return expenseGroupService.getById(id);
+    Optional<ExpenseGroupDTO> getUser(@PathVariable Long id){
+        return Optional.ofNullable(new ExpenseGroupDTO().fromExpenseGroup(expenseGroupService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")

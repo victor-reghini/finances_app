@@ -3,8 +3,6 @@ package br.com.victor.finances_app.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.Date;
-
 @Getter
 @Entity
 @Table(name = "cards")

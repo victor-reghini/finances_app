@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.CategoryDTO;
 import br.com.victor.finances_app.entity.Category;
 import br.com.victor.finances_app.service.CategoryService;
 import jakarta.validation.Valid;
@@ -20,23 +21,23 @@ public class CategoryController {
     }
 
     @PostMapping
-    Category create(@RequestBody @Valid Category category){
-        return categoryService.create(category);
+    CategoryDTO create(@RequestBody @Valid Category category){
+        return new CategoryDTO().fromCategory(categoryService.create(category));
     }
 
     @PutMapping
-    Category update(@RequestBody @Valid Category category){
-        return categoryService.update(category);
+    CategoryDTO update(@RequestBody @Valid Category category){
+        return new CategoryDTO().fromCategory(categoryService.update(category));
     }
 
     @GetMapping(path = "/list")
-    List<Category> getAll(){
-        return categoryService.getAll();
+    List<CategoryDTO> getAll(@RequestParam Long userId){
+        return categoryService.getAll(userId).stream().map(category -> new CategoryDTO().fromCategory(category)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<Category> getUser(@PathVariable Long id){
-        return categoryService.getById(id);
+    Optional<CategoryDTO> getUser(@PathVariable Long id){
+        return Optional.ofNullable(new CategoryDTO().fromCategory(categoryService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")

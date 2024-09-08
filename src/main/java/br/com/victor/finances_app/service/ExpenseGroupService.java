@@ -25,8 +25,8 @@ public class ExpenseGroupService {
         return expenseGroupRepository.save(expenseGroup);
     }
 
-    public List<ExpenseGroup> getAll(){
-        return expenseGroupRepository.findAll();
+    public List<ExpenseGroup> getAll(Long userId){
+        return expenseGroupRepository.findExpenseGroupByUserId(userId);
     }
 
     public Optional<ExpenseGroup> getById(Long id){

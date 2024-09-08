@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
-    @Query(value = "select acc from Account acc WHERE acc.user.id = :userId")
+    @Query(value = "select acc from Account acc where acc.user.id = :userId")
     List<Account> findAccountsByUserId(@Param("userId") Long userId);
 }

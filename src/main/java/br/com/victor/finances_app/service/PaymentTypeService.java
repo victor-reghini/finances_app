@@ -25,8 +25,8 @@ public class PaymentTypeService {
         return paymentTypeRepository.save(paymentType);
     }
 
-    public List<PaymentType> getAll(){
-        return paymentTypeRepository.findAll();
+    public List<PaymentType> getAll(Long userId){
+        return paymentTypeRepository.findPaymentTypeByUserId(userId);
     }
 
     public Optional<PaymentType> getById(Long id){

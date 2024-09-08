@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.CardDTO;
 import br.com.victor.finances_app.entity.Card;
 import br.com.victor.finances_app.service.CardService;
 import jakarta.validation.Valid;
@@ -20,23 +21,23 @@ public class CardController {
     }
 
     @PostMapping
-    Card create(@RequestBody @Valid Card card){
-        return cardService.create(card);
+    CardDTO create(@RequestBody @Valid Card card){
+        return new CardDTO().fromCard(cardService.create(card));
     }
 
     @PutMapping
-    Card update(@RequestBody @Valid Card card){
-        return cardService.update(card);
+    CardDTO update(@RequestBody @Valid Card card){
+        return new CardDTO().fromCard(cardService.update(card));
     }
 
     @GetMapping(path = "/list")
-    List<Card> getAll(){
-        return cardService.getAll();
+    List<CardDTO> getAll(@RequestParam(required = false) Long userId, @RequestParam(required = false) Long accountId){
+        return cardService.getAllWithFilters(userId, accountId).stream().map(card -> new CardDTO().fromCard(card)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<Card> getUser(@PathVariable Long id){
-        return cardService.getById(id);
+    Optional<CardDTO> getUser(@PathVariable Long id){
+        return Optional.ofNullable(new CardDTO().fromCard(cardService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")

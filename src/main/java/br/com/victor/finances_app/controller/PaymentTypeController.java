@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.PaymentTypeDTO;
 import br.com.victor.finances_app.entity.PaymentType;
 import br.com.victor.finances_app.service.PaymentTypeService;
 import jakarta.validation.Valid;
@@ -20,23 +21,23 @@ public class PaymentTypeController {
     }
 
     @PostMapping
-    PaymentType create(@RequestBody @Valid PaymentType paymentType){
-        return paymentTypeService.create(paymentType);
+    PaymentTypeDTO create(@RequestBody @Valid PaymentType paymentType){
+        return new PaymentTypeDTO().fromPaymentType(paymentTypeService.create(paymentType));
     }
 
     @PutMapping
-    PaymentType update(@RequestBody @Valid PaymentType paymentType){
-        return paymentTypeService.update(paymentType);
+    PaymentTypeDTO update(@RequestBody @Valid PaymentType paymentType){
+        return new PaymentTypeDTO().fromPaymentType(paymentTypeService.update(paymentType));
     }
 
     @GetMapping(path = "/list")
-    List<PaymentType> getAll(){
-        return paymentTypeService.getAll();
+    List<PaymentTypeDTO> getAll(@RequestParam Long userId){
+        return paymentTypeService.getAll(userId).stream().map(paymentType -> new PaymentTypeDTO().fromPaymentType(paymentType)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<PaymentType> getUser(@PathVariable Long id){
-        return paymentTypeService.getById(id);
+    Optional<PaymentTypeDTO> getUser(@PathVariable Long id){
+        return Optional.ofNullable(new PaymentTypeDTO().fromPaymentType(paymentTypeService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")
