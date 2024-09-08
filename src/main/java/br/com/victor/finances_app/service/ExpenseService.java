@@ -30,17 +30,14 @@ public class ExpenseService {
         return expenseRepository.save(expense);
     }
 
-    public List<Expense> getAll(Long user_id, Long account_id, Date start_date, Date end_date){
-        if (user_id != null && account_id != null && start_date != null && end_date != null) {
-            return expenseRepository.getAllByUserAccountAndPaymentDueDate(user_id, account_id, start_date, end_date);
+    public List<Expense> getAll(Long userId, Long accountId, Date startDate, Date endDate){
+        if (userId != null && accountId != null && startDate != null && endDate != null) {
+            return expenseRepository.getAllByUserAccountAndPaymentDueDate(userId, accountId, startDate, endDate);
         }
-        if (user_id != null && start_date != null && end_date != null) {
-            return expenseRepository.getAllByUserAndPaymentDueDate(user_id, start_date, end_date);
+        if (userId != null && startDate != null && endDate != null) {
+            return expenseRepository.getAllByUserAndPaymentDueDate(userId, startDate, endDate);
         }
-        if (user_id != null) {
-            return expenseRepository.getAllByUser(user_id);
-        }
-        return expenseRepository.findAll();
+        return expenseRepository.getAllByUser(userId);
     }
 
     public Optional<Expense> getById(Long id){
