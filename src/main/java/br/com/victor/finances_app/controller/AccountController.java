@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.AccountDTO;
 import br.com.victor.finances_app.entity.Account;
 import br.com.victor.finances_app.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,23 @@ public class AccountController {
     }
 
     @PostMapping
-    Account create(@RequestBody Account account) {
-        return accountService.create(account);
+    AccountDTO create(@RequestBody Account account) {
+        return new AccountDTO().fromAccount(accountService.create(account));
     }
 
     @PutMapping
-    Account update(@RequestBody Account account) {
-        return accountService.update(account);
+    AccountDTO update(@RequestBody Account account) {
+        return new AccountDTO().fromAccount(accountService.update(account));
     }
 
     @GetMapping(path = "/list")
-    List<Account> getAll() {
-        return accountService.getAll();
+    List<AccountDTO> getAll(@RequestParam Long userId) {
+        return accountService.getAllByUserId(userId).stream().map(account-> new AccountDTO().fromAccount(account)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<Account> getById(@PathVariable Long id) {
-        return accountService.getById(id);
+    Optional<AccountDTO> getById(@PathVariable Long id) {
+        return Optional.ofNullable(new AccountDTO().fromAccount(accountService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")

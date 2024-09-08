@@ -1,5 +1,6 @@
 package br.com.victor.finances_app.controller;
 
+import br.com.victor.finances_app.dto.UserDTO;
 import br.com.victor.finances_app.entity.User;
 import br.com.victor.finances_app.service.UserService;
 import jakarta.validation.Valid;
@@ -20,23 +21,23 @@ public class UserController {
     }
 
     @PostMapping
-    User create(@RequestBody @Valid User user){
-        return userService.create(user);
+    UserDTO create(@RequestBody @Valid User user){
+        return new UserDTO().fromUser(userService.create(user));
     }
 
     @PutMapping
-    User update(@RequestBody @Valid User user){
-        return userService.update(user);
+    UserDTO update(@RequestBody @Valid User user){
+        return new UserDTO().fromUser(userService.update(user));
     }
 
     @GetMapping(path = "/list")
-    List<User> getAll(){
-        return userService.getAll();
+    List<UserDTO> getAll(){
+        return userService.getAll().stream().map(user-> new UserDTO().fromUser(user)).toList();
     }
 
     @GetMapping(path = "/{id}")
-    Optional<User> getUser(@PathVariable Long id){
-        return userService.getById(id);
+    Optional<UserDTO> getUser(@PathVariable Long id){
+        return Optional.ofNullable(new UserDTO().fromUser(userService.getById(id).get()));
     }
 
     @DeleteMapping(path = "/{id}")
