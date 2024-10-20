@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    node {
-      label 'ubuntu linux docker jdk17'
-    }
-
-  }
+  agent any
   stages {
     stage('Checkout Code') {
       steps {
